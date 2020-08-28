@@ -1677,6 +1677,14 @@ template StatusCode PUBLIC_API Gemm<float>(const Layout, const Transpose, const 
                                            const float,
                                            cl_mem, const size_t, const size_t,
                                            cl_command_queue*, cl_event*, cl_mem);
+template StatusCode PUBLIC_API Gemm<uint32_t>(const Layout, const Transpose, const Transpose,
+                                           const size_t, const size_t, const size_t,
+                                           const uint32_t,
+                                           const cl_mem, const size_t, const size_t,
+                                           const cl_mem, const size_t, const size_t,
+                                           const uint32_t,
+                                           cl_mem, const size_t, const size_t,
+                                           cl_command_queue*, cl_event*, cl_mem);
 template StatusCode PUBLIC_API Gemm<double>(const Layout, const Transpose, const Transpose,
                                             const size_t, const size_t, const size_t,
                                             const double,

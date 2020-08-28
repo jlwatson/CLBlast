@@ -298,6 +298,7 @@ void Xgemm<T>::GemmDirect(const size_t m, const size_t n, const size_t k,
 // Compiles the templated class
 template class Xgemm<half>;
 template class Xgemm<float>;
+template class Xgemm<uint32_t>;
 template class Xgemm<double>;
 template class Xgemm<float2>;
 template class Xgemm<double2>;

@@ -28,6 +28,7 @@ namespace clblast {
 // Returns a scalar with a default value
 template <typename T> T GetScalar() { return static_cast<T>(2.0); }
 template float GetScalar<float>();
+template uint32_t GetScalar<uint32_t>();
 template double GetScalar<double>();
 template <> half GetScalar() { return FloatToHalf(2.0f); }
 template <> float2 GetScalar() { return {2.0f, 0.5f}; }
@@ -36,6 +37,7 @@ template <> double2 GetScalar() { return {2.0, 0.5}; }
 // Returns a scalar of value 0
 template <typename T> T ConstantZero() { return static_cast<T>(0.0); }
 template float ConstantZero<float>();
+template uint32_t ConstantZero<uint32_t>();
 template double ConstantZero<double>();
 template <> half ConstantZero() { return FloatToHalf(0.0f); }
 template <> float2 ConstantZero() { return {0.0f, 0.0f}; }
@@ -44,6 +46,7 @@ template <> double2 ConstantZero() { return {0.0, 0.0}; }
 // Returns a scalar of value 1
 template <typename T> T ConstantOne() { return static_cast<T>(1.0); }
 template float ConstantOne<float>();
+template uint32_t ConstantOne<uint32_t>();
 template double ConstantOne<double>();
 template <> half ConstantOne() { return FloatToHalf(1.0f); }
 template <> float2 ConstantOne() { return {1.0f, 0.0f}; }
@@ -52,6 +55,7 @@ template <> double2 ConstantOne() { return {1.0, 0.0}; }
 // Returns a scalar of value -1
 template <typename T> T ConstantNegOne() { return static_cast<T>(-1.0); }
 template float ConstantNegOne<float>();
+template uint32_t ConstantNegOne<uint32_t>();
 template double ConstantNegOne<double>();
 template <> half ConstantNegOne() { return FloatToHalf(-1.0f); }
 template <> float2 ConstantNegOne() { return {-1.0f, 0.0f}; }
@@ -60,6 +64,7 @@ template <> double2 ConstantNegOne() { return {-1.0, 0.0}; }
 // Returns a scalar of some value
 template <typename T> T Constant(const double val) { return static_cast<T>(val); }
 template float Constant<float>(const double);
+template uint32_t Constant<uint32_t>(const double);
 template double Constant<double>(const double);
 template <> half Constant(const double val) { return FloatToHalf(static_cast<float>(val)); }
 template <> float2 Constant(const double val) { return {static_cast<float>(val), 0.0f}; }
@@ -68,6 +73,7 @@ template <> double2 Constant(const double val) { return {val, 0.0}; }
 // Returns a small scalar value just larger than 0
 template <typename T> T SmallConstant() { return static_cast<T>(1e-4); }
 template float SmallConstant<float>();
+template uint32_t SmallConstant<uint32_t>();
 template double SmallConstant<double>();
 template <> half SmallConstant() { return FloatToHalf(1e-4f); }
 template <> float2 SmallConstant() { return {1e-4f, 0.0f}; }
@@ -278,6 +284,7 @@ template int GetArgument<int>(const std::vector<std::string>&, std::string&, con
 template size_t GetArgument<size_t>(const std::vector<std::string>&, std::string&, const std::string&, const size_t);
 template half GetArgument<half>(const std::vector<std::string>&, std::string&, const std::string&, const half);
 template float GetArgument<float>(const std::vector<std::string>&, std::string&, const std::string&, const float);
+template uint32_t GetArgument<uint32_t>(const std::vector<std::string>&, std::string&, const std::string&, const uint32_t);
 template double GetArgument<double>(const std::vector<std::string>&, std::string&, const std::string&, const double);
 template float2 GetArgument<float2>(const std::vector<std::string>&, std::string&, const std::string&, const float2);
 template double2 GetArgument<double2>(const std::vector<std::string>&, std::string&, const std::string&, const double2);
@@ -356,6 +363,7 @@ void PopulateVector(std::vector<half> &vector, std::mt19937 &mt, std::uniform_re
 // no conversion, but half-precision is not supported as kernel argument so it is converted to float.
 template <> typename RealArg<half>::Type GetRealArg(const half value) { return HalfToFloat(value); }
 template <> typename RealArg<float>::Type GetRealArg(const float value) { return value; }
+template <> typename RealArg<uint32_t>::Type GetRealArg(const uint32_t value) { return value; }
 template <> typename RealArg<double>::Type GetRealArg(const double value) { return value; }
 template <> typename RealArg<float2>::Type GetRealArg(const float2 value) { return value; }
 template <> typename RealArg<double2>::Type GetRealArg(const double2 value) { return value; }
@@ -392,6 +400,7 @@ size_t GetBytes(const Precision precision) {
 // Convert the template argument into a precision value
 template <> Precision PrecisionValue<half>() { return Precision::kHalf; }
 template <> Precision PrecisionValue<float>() { return Precision::kSingle; }
+template <> Precision PrecisionValue<uint32_t>() { return Precision::kSingle; }
 template <> Precision PrecisionValue<double>() { return Precision::kDouble; }
 template <> Precision PrecisionValue<float2>() { return Precision::kComplexSingle; }
 template <> Precision PrecisionValue<double2>() { return Precision::kComplexDouble; }
@@ -400,6 +409,7 @@ template <> Precision PrecisionValue<double2>() { return Precision::kComplexDoub
 
 // Returns false is this precision is not supported by the device
 template <> bool PrecisionSupported<float>(const Device &) { return true; }
+template <> bool PrecisionSupported<uint32_t>(const Device &) { return true; }
 template <> bool PrecisionSupported<float2>(const Device &) { return true; }
 template <> bool PrecisionSupported<double>(const Device &device) { return device.SupportsFP64(); }
 template <> bool PrecisionSupported<double2>(const Device &device) { return device.SupportsFP64(); }

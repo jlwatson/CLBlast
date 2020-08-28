@@ -43,23 +43,31 @@ int main() {
   const size_t m = 128;
   const size_t n = 64;
   const size_t k = 512;
-  const float alpha = 0.7f;
-  const float beta = 1.0f;
+  const uint32_t alpha = 1;
+  const uint32_t beta = 2;
   const auto a_ld = k;
   const auto b_ld = n;
   const auto c_ld = n;
 
+  printf("test 52\n");
+
   // Initializes the OpenCL platform
   auto platforms = std::vector<cl::Platform>();
   cl::Platform::get(&platforms);
+
+  printf("platforms size %d\n", platforms.size());
   if (platforms.size() == 0 || platform_id >= platforms.size()) { return 1; }
   auto platform = platforms[platform_id];
+
+  printf("test 60\n");
 
   // Initializes the OpenCL device
   auto devices = std::vector<cl::Device>();
   platform.getDevices(CL_DEVICE_TYPE_ALL, &devices);
   if (devices.size() == 0 || device_id >= devices.size()) { return 1; }
   auto device = devices[device_id];
+
+  printf("test 64\n");
 
   // Creates the OpenCL context, queue, and an event
   auto device_as_vector = std::vector<cl::Device>{device};
@@ -68,23 +76,25 @@ int main() {
   auto event = cl_event{nullptr};
 
   // Populate host matrices with some example data
-  auto host_a = std::vector<float>(m*k);
-  auto host_b = std::vector<float>(n*k);
-  auto host_c = std::vector<float>(m*n);
-  for (auto &item: host_a) { item = 12.193f; }
-  for (auto &item: host_b) { item = -8.199f; }
-  for (auto &item: host_c) { item = 0.0f; }
+  auto host_a = std::vector<uint32_t>(m*k);
+  auto host_b = std::vector<uint32_t>(n*k);
+  auto host_c = std::vector<uint32_t>(m*n);
+  for (auto &item: host_a) { item = 1; }
+  for (auto &item: host_b) { item = 2; }
+  for (auto &item: host_c) { item = 0; }
 
   // Copy the matrices to the device
-  auto device_a = cl::Buffer(context, CL_MEM_READ_WRITE, host_a.size()*sizeof(float));
-  auto device_b = cl::Buffer(context, CL_MEM_READ_WRITE, host_b.size()*sizeof(float));
-  auto device_c = cl::Buffer(context, CL_MEM_READ_WRITE, host_c.size()*sizeof(float));
-  queue.enqueueWriteBuffer(device_a, CL_TRUE, 0, host_a.size()*sizeof(float), host_a.data());
-  queue.enqueueWriteBuffer(device_b, CL_TRUE, 0, host_b.size()*sizeof(float), host_b.data());
-  queue.enqueueWriteBuffer(device_c, CL_TRUE, 0, host_c.size()*sizeof(float), host_c.data());
+  auto device_a = cl::Buffer(context, CL_MEM_READ_WRITE, host_a.size()*sizeof(uint32_t));
+  auto device_b = cl::Buffer(context, CL_MEM_READ_WRITE, host_b.size()*sizeof(uint32_t));
+  auto device_c = cl::Buffer(context, CL_MEM_READ_WRITE, host_c.size()*sizeof(uint32_t));
+  queue.enqueueWriteBuffer(device_a, CL_TRUE, 0, host_a.size()*sizeof(uint32_t), host_a.data());
+  queue.enqueueWriteBuffer(device_b, CL_TRUE, 0, host_b.size()*sizeof(uint32_t), host_b.data());
+  queue.enqueueWriteBuffer(device_c, CL_TRUE, 0, host_c.size()*sizeof(uint32_t), host_c.data());
 
   // Start the timer
   auto start_time = std::chrono::steady_clock::now();
+
+  printf("test 89\n");
 
   // Call the SGEMM routine. Note that the type of alpha and beta (float) determine the precision.
   auto queue_plain = queue();
