@@ -10,6 +10,7 @@
 #include "database/kernels/xgemm/xgemm.hpp"
 #include "database/kernels/xgemm/xgemm_16.hpp"
 #include "database/kernels/xgemm/xgemm_32.hpp"
+#include "database/kernels/xgemm/xgemm_96.hpp"
 #include "database/kernels/xgemm/xgemm_3232.hpp"
 #include "database/kernels/xgemm/xgemm_64.hpp"
 #include "database/kernels/xgemm/xgemm_6464.hpp"

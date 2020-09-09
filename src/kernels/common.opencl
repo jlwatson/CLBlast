@@ -58,6 +58,17 @@ R"(
   #define ONE 1.0f
   #define SMALLEST -1.0e37f
 
+// Int precision
+#elif PRECISION == 96
+  typedef uint real;
+  typedef uint2 real2;
+  typedef uint4 real4;
+  typedef uint8 real8;
+  typedef uint16 real16;
+  #define ZERO 0
+  #define ONE 1
+  #define SMALLEST 0
+
 // Double-precision 
 #elif PRECISION == 64
   typedef double real;
@@ -163,6 +174,8 @@ R"(
 // The absolute value (component-wise)
 #if PRECISION == 3232 || PRECISION == 6464
   #define AbsoluteValue(value) value.x = fabs(value.x); value.y = fabs(value.y)
+#elif PRECISION == 96
+  #define AbsoluteValue(value) value = abs(value)
 #else
   #define AbsoluteValue(value) value = fabs(value)
 #endif

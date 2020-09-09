@@ -14,6 +14,7 @@ namespace database {
 
 extern const DatabaseEntry XgemmHalf;
 extern const DatabaseEntry XgemmSingle;
+extern const DatabaseEntry XgemmSingleInt;
 extern const DatabaseEntry XgemmComplexSingle;
 extern const DatabaseEntry XgemmDouble;
 extern const DatabaseEntry XgemmComplexDouble;

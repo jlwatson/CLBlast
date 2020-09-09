@@ -390,6 +390,7 @@ size_t GetBytes(const Precision precision) {
   switch(precision) {
     case Precision::kHalf: return 2;
     case Precision::kSingle: return 4;
+    case Precision::kSingleInt: return 4;
     case Precision::kDouble: return 8;
     case Precision::kComplexSingle: return 8;
     case Precision::kComplexDouble: return 16;
@@ -400,7 +401,7 @@ size_t GetBytes(const Precision precision) {
 // Convert the template argument into a precision value
 template <> Precision PrecisionValue<half>() { return Precision::kHalf; }
 template <> Precision PrecisionValue<float>() { return Precision::kSingle; }
-template <> Precision PrecisionValue<uint32_t>() { return Precision::kSingle; }
+template <> Precision PrecisionValue<uint32_t>() { return Precision::kSingleInt; }
 template <> Precision PrecisionValue<double>() { return Precision::kDouble; }
 template <> Precision PrecisionValue<float2>() { return Precision::kComplexSingle; }
 template <> Precision PrecisionValue<double2>() { return Precision::kComplexDouble; }
